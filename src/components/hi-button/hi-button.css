@@ -1,0 +1,12 @@
+.hi-button {
+  font-size: 20px;
+  padding: 7px 15px;
+  background: blue;
+  color: #fff;
+  outline: none;
+}
+
+.hi-button-text {
+  color: green;
+  font-weight: bold;
+}
