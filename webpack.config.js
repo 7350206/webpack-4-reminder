@@ -5,6 +5,7 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -12,7 +13,8 @@ module.exports = {
     // prevent caching by name - [contenthash]
     filename: 'bundle.[contenthash].js',
     path: path.resolve(__dirname, './dist'),
-    publicPath: 'dist/'
+    // publicPath: 'dist/' // since html-plugin
+    publicPath: ''
   },
   mode: 'none',
   module: {
@@ -59,6 +61,15 @@ module.exports = {
         '**/*', //clean all (include subdirs) inside dist/ folder
         path.join(process.cwd(), 'build/**/*')
       ]
+    }),
+
+    new HtmlWebpackPlugin({
+      title: 'test web App',
+      filename: 'subfolder/custom.html',
+      meta: {
+        content: 'width=device-width, initial-scale=1.0',
+        description: 'some description'
+      }
     })
   ]
 };
