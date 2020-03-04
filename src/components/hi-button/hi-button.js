@@ -10,7 +10,7 @@ class HiButton {
   render() {
     const button = document.createElement('button');
     const body = document.querySelector('body');
-    button.innerHTML = 'Hi there';
+    button.innerHTML = 'Hi there!';
     button.classList.add('hi-button');
 
     button.onclick = function() {
