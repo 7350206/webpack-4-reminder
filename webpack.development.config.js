@@ -2,8 +2,8 @@
 
 // !! process loaders from right to left
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -11,12 +11,20 @@ module.exports = {
   entry: './src/index.js',
   output: {
     // prevent caching by name - [contenthash]
-    filename: 'bundle.[contenthash].js',
+    filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, './dist'),
     // publicPath: 'dist/' // since html-plugin
     publicPath: ''
   },
-  mode: 'none',
+
+  // 3 modes: none, development, production
+  // if not set - prod is default
+  mode: 'development',
+  devServer: {
+    contentBase: path.resolve(__dirname, './dist'),
+    index: 'custom.html',
+    port: 9000
+  },
   module: {
     rules: [
       {
@@ -25,13 +33,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        // use: ['style-loader', 'css-loader']
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: ['style-loader', 'css-loader']
+        // use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.scss$/,
-        // use: ['style-loader', 'css-loader', 'sass-loader']
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
+        // use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       // will be applicable for all, except node_modules folder
       {
@@ -47,14 +55,18 @@ module.exports = {
       }
     ]
   },
+
+  // ! webpack.js.org/plugins
+
   plugins: [
     // minify the bundle (terser is recommended, against uglify)
-    new TerserPlugin(),
+    // no need to minify by devmode
+    // new TerserPlugin(),
 
     // to prevent inject css into bundle (working inline on runtime)
     // plugin EXTRACTS separate css|scss files from components
     // and putting all those css into one separate file in /dist
-    new MiniCssExtractPlugin({ filename: 'styles.[contenthash].css' }),
+    //  new MiniCssExtractPlugin({ filename: 'styles.[contenthash].css' }),
 
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
@@ -65,7 +77,7 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       title: 'test web App',
-      filename: 'subfolder/custom.html',
+      filename: 'custom.html',
       meta: {
         content: 'width=device-width, initial-scale=1.0',
         description: 'some description'

@@ -10,3 +10,14 @@ button.render();
 
 const heading = new Heading();
 heading.render();
+
+if (process.env.NODE_ENV === 'production') {
+  console.log('production mode');
+} else if (process.env.NODE_ENV === 'development') {
+  console.log('development mode, use sourcemaps');
+} else {
+  console.log('none mode');
+}
+
+// prod and dev modes handle errors differently
+heading.notExistMethod();
