@@ -1,0 +1,18 @@
+$font-size: 20px;
+$button-background-color: red;
+$button-font-color: #0f0;
+$font-weight: bold;
+
+.hi-button {
+  font-size: $font-size;
+  padding: 7px 15px;
+  background: $button-background-color;
+  color: #fff;
+  outline: none;
+}
+
+.hi-button-text {
+  color: $button-font-color;
+  font-weight: $font-weight;
+  font-family: Arial, Helvetica, sans-serif;
+}
